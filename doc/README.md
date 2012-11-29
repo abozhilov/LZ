@@ -499,7 +499,7 @@ Apply a function simultaneously against two values  of the obj *(from right-to-l
 Repeats the given object N times.
 
 #### Arguments
-1. `obj` *(Array|ArrayLike|string)*:
+1. `obj` *(Array|string)*:
 2. `times` *(int)*:
 
 * * *

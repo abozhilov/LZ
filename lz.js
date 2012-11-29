@@ -935,15 +935,11 @@ var lz = {};
      * 
      * @memberOf lz     
      * @category Array/Collection    
-     * @param {Array|ArrayLike|string} obj
+     * @param {Array|string} obj
      * @param {int} times  
      */     
     lz.repeat = function (obj, times) {
-        var res =  ''; 
-        if (lz.klass(obj) != 'String') {
-            obj = lz.array(obj);
-            res = [];
-        }
+        var res =  (lz.klass(obj) == 'String' ? '' : []);
         times = Math.max(1, times);
         do {
             if (times & 0x1) res = res.concat(obj);
