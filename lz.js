@@ -939,7 +939,11 @@ var lz = {};
      * @param {int} times  
      */     
     lz.repeat = function (obj, times) {
-        var res = lz.klass(obj) == 'String' ? '' : (obj = lz.array(obj), []); 
+        var res =  ''; 
+        if (lz.klass(obj) != 'String') {
+            obj = lz.array(obj);
+            res = [];
+        }
         times = Math.max(1, times);
         do {
             if (times & 0x1) res = res.concat(obj);
