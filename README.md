@@ -20,6 +20,11 @@ polyfill.
 The names of the methods are as short as possible and self explanatory
 as well.
 
+API Doc
+-------
+
+https://github.com/abozhilov/LZ/tree/master/doc
+
 License
 -------
 
