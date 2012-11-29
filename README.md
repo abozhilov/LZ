@@ -28,8 +28,8 @@ https://github.com/abozhilov/LZ/tree/master/doc
 License
 -------
 
-**GPL v.3**  
- http://www.gnu.org/licenses/gpl.html
+**LGPL v.3**  
+
 
 Author
 ------
