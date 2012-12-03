@@ -1,47 +1,47 @@
 describe('Object', function () {
-    describe('lz.klass should return the internal [[Class]]', function () {
+    describe('lz.classOf should return the internal [[Class]]', function () {
         it('{} class is Object', function () {
-            expect(lz.klass({})).toBe('Object');
+            expect(lz.classOf({})).toBe('Object');
         });
         
         it('[] class is Array', function () {
-            expect(lz.klass([])).toBe('Array');
+            expect(lz.classOf([])).toBe('Array');
         });  
         
         it('function(){} class is Function', function () {
-            expect(lz.klass(function(){})).toBe('Function');
+            expect(lz.classOf(function(){})).toBe('Function');
         }); 
         
         it('/reg/ class is RegExp', function () {
-            expect(lz.klass(/reg/)).toBe('RegExp');
+            expect(lz.classOf(/reg/)).toBe('RegExp');
         });         
         
         it('"string" class is String', function () {
-            expect(lz.klass('')).toBe('String');
+            expect(lz.classOf('')).toBe('String');
         });   
         
         it('10 class is Number', function () {
-            expect(lz.klass(10)).toBe('Number');
+            expect(lz.classOf(10)).toBe('Number');
         });   
         
         it('true class is Boolean', function () {
-            expect(lz.klass(true)).toBe('Boolean');
+            expect(lz.classOf(true)).toBe('Boolean');
         });
         
         it('new Date class is Date', function () {
-            expect(lz.klass(new Date)).toBe('Date');
+            expect(lz.classOf(new Date)).toBe('Date');
         });
         
         it('new Error class is Error', function () {
-            expect(lz.klass(new Error)).toBe('Error');
+            expect(lz.classOf(new Error)).toBe('Error');
         }); 
         
         it('new TypeError class is Error', function () {
-            expect(lz.klass(new TypeError)).toBe('Error');
+            expect(lz.classOf(new TypeError)).toBe('Error');
         });
         
         it('Math class is Math', function () {
-            expect(lz.klass(Math)).toBe('Math');
+            expect(lz.classOf(Math)).toBe('Math');
         });                                                                      
     });
     
@@ -149,27 +149,27 @@ describe('Object', function () {
     describe('lz.object should create new instance of the constructor', function () {
         it('creates new Boolean object', function () {
             var obj = lz.object(Boolean, []);
-            expect(lz.type(obj) == 'object' && lz.klass(obj) == 'Boolean').toBe(true);
+            expect(lz.type(obj) == 'object' && lz.classOf(obj) == 'Boolean').toBe(true);
         });
         
         it('creates new String object', function () {
             var obj = lz.object(String, []);
-            expect(lz.type(obj) == 'object' && lz.klass(obj) == 'String').toBe(true);
+            expect(lz.type(obj) == 'object' && lz.classOf(obj) == 'String').toBe(true);
         }); 
         
         it('creates new Number object', function () {
             var obj = lz.object(Number, []);
-            expect(lz.type(obj) == 'object' && lz.klass(obj) == 'Number').toBe(true);
+            expect(lz.type(obj) == 'object' && lz.classOf(obj) == 'Number').toBe(true);
         }); 
         
         it('creates new Date object', function () {
             var obj = lz.object(Date, []);
-            expect(lz.type(obj) == 'object' && lz.klass(obj) == 'Date').toBe(true);
+            expect(lz.type(obj) == 'object' && lz.classOf(obj) == 'Date').toBe(true);
         });    
         
         it('creates new Array object', function () {
             var obj = lz.object(Array, []);
-            expect(lz.type(obj) == 'array' && lz.klass(obj) == 'Array').toBe(true);
+            expect(lz.type(obj) == 'array' && lz.classOf(obj) == 'Array').toBe(true);
         }); 
         
         it('creates new object with user defined constructor', function () {
@@ -315,7 +315,7 @@ describe('Object', function () {
             var arr = [1, 2, 3],
                 arr1 = lz.dup(arr);
             expect(
-                lz.klass(arr) == 'Array' &&
+                lz.classOf(arr) == 'Array' &&
                 arr1[0] == arr[0] && 
                 arr1[1] == arr[1] &&
                 arr1[2] == arr[2]
@@ -326,7 +326,7 @@ describe('Object', function () {
             var date = new Date(2012, 11, 2, 0, 0, 0),
                 date1 = lz.dup(date);            
             expect(
-                lz.klass(date1) == 'Date' &&
+                lz.classOf(date1) == 'Date' &&
                 +date1 == +date 
             ).toBe(true); 
         }); 
@@ -343,7 +343,7 @@ describe('Object', function () {
             var reg = /reg/,
                 reg1 = lz.dup(reg);
             expect(
-                lz.klass(reg1) == 'RegExp' &&
+                lz.classOf(reg1) == 'RegExp' &&
                 reg1.source == reg.source
             ).toBe(true);        
         });
@@ -352,7 +352,7 @@ describe('Object', function () {
             var reg = /reg/gm,
                 reg1 = lz.dup(reg);
             expect(
-                lz.klass(reg1) == 'RegExp' &&
+                lz.classOf(reg1) == 'RegExp' &&
                 reg1.global == reg.global &&
                 reg1.ignoreCase == reg.ignoreCase && 
                 reg1.multiline == reg.multiline
@@ -364,7 +364,7 @@ describe('Object', function () {
                 bool1 = lz.dup(bool);            
             expect(
                 typeof bool1 == 'object' &&
-                lz.klass(bool1) == 'Boolean' && 
+                lz.classOf(bool1) == 'Boolean' && 
                 +bool1 == +bool    
             ).toBe(true);    
         });
@@ -374,7 +374,7 @@ describe('Object', function () {
                 num1 = lz.dup(num);            
             expect(
                 typeof num1 == 'object' &&
-                lz.klass(num1) == 'Number' && 
+                lz.classOf(num1) == 'Number' && 
                 +num1 == +num    
             ).toBe(true);    
         });  
@@ -384,7 +384,7 @@ describe('Object', function () {
                 str1 = lz.dup(str);            
             expect(
                 typeof str1 == 'object' &&
-                lz.klass(str1) == 'String' && 
+                lz.classOf(str1) == 'String' && 
                 String(str1) == String(str)    
             ).toBe(true);    
         });

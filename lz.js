@@ -1,5 +1,5 @@
 /**
- * LZ Lib v.0.5.1 
+ * LZ Lib v.0.6.2 
  * @module
  */
 var lz = {};
@@ -24,7 +24,7 @@ var lz = {};
      * @param {Object} obj 
      * @return {string}
      */    
-    lz.klass = function (obj) {
+    lz.classOf = function (obj) {
         return {}.toString.call(obj).slice(8, -1);
     };
     
@@ -59,7 +59,7 @@ var lz = {};
             if (val === null) {
                 type = 'null';
             }
-            else if (lz.klass(val) == 'Array') {
+            else if (lz.classOf(val) == 'Array') {
                 type = 'array';
             }
         }
@@ -108,7 +108,7 @@ var lz = {};
     else {
         lz.object = function (ctor, args) {
             var len = args.length;
-            switch (lz.klass(ctor.prototype)) {
+            switch (lz.classOf(ctor.prototype)) {
                 case 'String':
                 case 'Number':
                 case 'Boolean': 
@@ -258,7 +258,7 @@ var lz = {};
         if (!lz.isObject(obj)) {
             throw TypeError('obj is not an object');
         }
-        switch (lz.klass(obj)) { 
+        switch (lz.classOf(obj)) { 
             case 'Array':                        
                 return [].slice.call(obj); 
             case 'Date': 
@@ -524,7 +524,7 @@ var lz = {};
      * @return {Array}
      */
     lz.array = function (obj) {
-        if (lz.klass(obj) == 'String') {
+        if (lz.classOf(obj) == 'String') {
             return obj.split('');
         } 
         var arr = [];
@@ -863,7 +863,7 @@ var lz = {};
      * @param {int} [pos]  
      */
     lz.indexOf = function (obj, value, pos) {
-        if (typeof obj == 'string' || lz.klass(obj) == 'String') {
+        if (typeof obj == 'string' || lz.classOf(obj) == 'String') {
             return obj.indexOf(value, pos);
         }
         return indexOf(obj, value, pos);        
@@ -910,7 +910,7 @@ var lz = {};
      * @param {int} [pos]  
      */    
     lz.lastIndexOf = function (obj, value, pos) {
-        if (typeof obj == 'string' || lz.klass(obj) == 'String') {
+        if (typeof obj == 'string' || lz.classOf(obj) == 'String') {
             return obj.lastIndexOf(value, pos);    
         }
         pos = +pos;
@@ -939,13 +939,11 @@ var lz = {};
      * @param {int} times  
      */     
     lz.repeat = function (obj, times) {
-        var res =  (lz.klass(obj) == 'String' ? '' : []);
-        times = Math.max(1, times);
-        do {
-            if (times & 0x1) res = res.concat(obj);
+        var res =  (lz.classOf(obj) == 'String' ? '' : []);
+        for (var mul = Math.max(0, times); mul; mul >>= 1) {
+            if (mul & 0x1) res = res.concat(obj);
             obj = obj.concat(obj);
-        } while ((times >>= 1));
-        
+        }
         return res;         
     };        
     
@@ -1117,6 +1115,7 @@ var lz = {};
      * Returns the number of occurrences of 
      * the given substring in string. 
      * 
+     * @credits Rick Waldron 
      * @memberOf lz
      * @category String 
      * @param {string} str
@@ -1124,13 +1123,8 @@ var lz = {};
      * @return {int} 
      */
     lz.count = function(str, substr) {
-        var i = 0,
-             pos;
-        while ((pos = str.indexOf(substr, ++pos)) > -1) {
-            i++;
-        }
-        return i;                     
-    };
+        return substr.length && str.split(substr).length - 1;
+    };  
     
     /**
      * Case insensitive comparison of two strings.

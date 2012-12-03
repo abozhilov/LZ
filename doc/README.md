@@ -1,4 +1,4 @@
-# LZ v.0.5.1
+# LZ v.0.6.2
 
 <!-- div -->
 
@@ -10,7 +10,7 @@
 * [`lz.isObject`](#lzisobjectval)
 * [`lz.isPrimitive`](#lzisprimitiveval)
 * [`lz.keys`](#lzkeysobj)
-* [`lz.klass`](#lzklassobj)
+* [`lz.classOf`](#lzclassofobj)
 * [`lz.mixin`](#lzmixindest--source1-source2-sourcen)
 * [`lz.namespace`](#lznamespacespace--fn)
 * [`lz.object`](#lzobjectctor-args)
@@ -197,8 +197,8 @@ Returns array of own enumerable properties of given object.
 
 <!-- div -->
 
-### <a id="lzklassobj"></a>`lz.klass(obj)`
-<a href="#lzklassobj">#</a> [&#x24C8;](#L42 "View in source") [&#x24C9;][1]
+### <a id="lzclassofobj"></a>`lz.classOf(obj)`
+<a href="#lzclassofobj">#</a> [&#x24C8;](#L42 "View in source") [&#x24C9;][1]
 
 Retrieves the type tag of object.  Useful for nominal type checking.
 

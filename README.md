@@ -1,4 +1,4 @@
-LZ v.0.5.1
+LZ v.0.6.2
 ===========
 
 LZ is a chocolate JavaScript library.
