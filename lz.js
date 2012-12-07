@@ -1,5 +1,5 @@
 /**
- * LZ Lib v.0.6.2 
+ * LZ Lib v.0.6.3 
  * @module
  */
 var lz = {};
