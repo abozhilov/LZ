@@ -44,7 +44,7 @@ describe('Array/Collection', function() {
             expect(context).toBe(function() {return this}.call());
         });
         it('should iterate all', function() {
-            testSubject.forEach(function(obj, index) {
+            lz.each(testSubject, function(obj, index) {
                 actual[index] = obj;
             });
             expect(actual).toExactlyMatch(expected);
@@ -110,7 +110,7 @@ describe('Array/Collection', function() {
         });
         
         it('should return false if it runs to the end', function() {
-            actual = testSubject.some(function() {});
+            actual = lz.some(testSubject, function() {});
             expect(actual).toBeFalsy();
         });
         it('should return true if it is stopped somewhere', function() {
@@ -359,7 +359,7 @@ describe('Array/Collection', function() {
                 actual = lz.indexOf(testAL, null);
                 expect(actual).toEqual(5);
                 
-                actual = Array.prototype.indexOf.call(testAL, '2');
+                actual = lz.indexOf(testAL, '2');
                 expect(actual).toEqual(-1);
             });
             it('should skip the first if fromIndex is set (array-like)', function() {

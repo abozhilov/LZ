@@ -13,6 +13,28 @@
   <script type="text/javascript" src="helpers/matchers.js"></script>
   
   <!-- include source files here... -->
+  <script type="text/javascript">
+    (function () {
+        if (/fallbacks=true/.test(window.location.search)) {
+            //Setup fallbacks
+            delete Object.create;
+            delete Object.keys;
+            delete Object.getPrototypeOf;            
+            delete Function.prototype.bind;
+            delete String.prototype.trim;
+            delete Number.prototype.clz;
+            delete Array.prototype.every;
+            delete Array.prototype.some;
+            delete Array.prototype.forEach;
+            delete Array.prototype.map;
+            delete Array.prototype.filter;
+            delete Array.prototype.reduce;
+            delete Array.prototype.reduceRight;
+            delete Array.prototype.indexOf;
+            delete Array.prototype.lastIndexOf;
+        }
+    })();
+  </script>
   <script type="text/javascript" src="../lz.js"></script>
 
   <!-- include spec files here... -->

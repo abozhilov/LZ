@@ -79,7 +79,8 @@ jasmine.HtmlReporter = function(_doc) {
     createReporterDom(runner.env.versionString());
     doc.body.appendChild(dom.reporter);
     setExceptionHandling();
-
+    setFallbacksHandling();
+    
     reporterView = new jasmine.HtmlReporter.ReporterView(dom);
     reporterView.addSpecs(specs, self.specFilter);
   };
@@ -154,6 +155,8 @@ jasmine.HtmlReporter = function(_doc) {
       dom.symbolSummary = self.createDom('ul', {className: 'symbolSummary'}),
       dom.alert = self.createDom('div', {className: 'alert'},
         self.createDom('span', { className: 'exceptions' },
+          self.createDom('label', { className: 'label', for: 'fallbacks' }, 'Test with fallbacks'),  
+          self.createDom('input', { id: 'fallbacks', type: 'checkbox' }),
           self.createDom('label', { className: 'label', for: 'no_try_catch' }, 'No try/catch'),
           self.createDom('input', { id: 'no_try_catch', type: 'checkbox' }))),
       dom.results = self.createDom('div', {className: 'results'},
@@ -165,6 +168,8 @@ jasmine.HtmlReporter = function(_doc) {
   function noTryCatch() {
     return window.location.search.match(/catch=false/);
   }
+  
+
 
   function searchWithCatch() {
     var params = jasmine.HtmlReporter.parameters(window.document);
@@ -184,6 +189,28 @@ jasmine.HtmlReporter = function(_doc) {
 
     return params.join("&");
   }
+  
+  function searchWithFallbacks() {
+    var params = jasmine.HtmlReporter.parameters(window.document);
+    var removed = false;
+    var i = 0;
+
+    while (!removed && i < params.length) {
+      if (params[i].match(/fallbacks=/)) {
+        params.splice(i, 1);
+        removed = true;
+      }
+      i++;
+    }
+    if (!/fallbacks=true/.test(window.location.search)) {
+      params.push("fallbacks=true");
+    }
+    else {
+        params.push("fallbacks=false")    
+    }
+
+    return params.join("&");
+  }  
 
   function setExceptionHandling() {
     var chxCatch = document.getElementById('no_try_catch');
@@ -195,6 +222,16 @@ jasmine.HtmlReporter = function(_doc) {
     chxCatch.onclick = function() {
       window.location.search = searchWithCatch();
     };
+  }
+  
+  function setFallbacksHandling() {
+    var elmn = document.getElementById('fallbacks');
+    if (/fallbacks=true/.test(window.location.search)) {
+      elmn.setAttribute('checked', true);
+    }    
+    elmn.onclick = function () {
+        window.location.search = searchWithFallbacks();    
+    };  
   }
 };
 jasmine.HtmlReporter.parameters = function(doc) {

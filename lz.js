@@ -425,7 +425,7 @@ var lz = {};
     else {
         lz.bind = function (fn, thisVal) {
             var args = [].slice.call(arguments, 2);
-            return function () {
+            return function f() {
                 var argsList = args.concat([].slice.call(arguments));
                 if (this instanceof f) {
                     return lz.object(fn, argsList);
@@ -995,7 +995,7 @@ var lz = {};
     }
     else {    
         lz.trim = function (str) {
-            return str.replace(/^\s+|\s+$/, '');
+            return str.replace(/^\s+|\s+$/g, '');
         };
     }
     
