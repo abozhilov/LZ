@@ -146,6 +146,26 @@ describe('Object', function () {
         });                                                                 
     });
     
+    describe('lz.sameValue should perform strict equlaity test', function () {
+        it('NaN is equal to NaN', function () {
+            expect(lz.sameValue(NaN, NaN)).toBe(true);
+        });
+        
+        it('-0 is not equal to 0', function () {
+            expect(lz.sameValue(0, -0)).toBe(false);
+        });
+        
+        it('performs strict equality test "1" is not equal to 1', function () {
+            expect(lz.sameValue('1', 1)).toBe(false);
+        });
+        
+        it('performs object reference test', function () {
+            var obj = {};
+            expect(lz.sameValue(obj, obj)).toBe(true);
+            expect(lz.sameValue([1, 2, 3], [1, 2, 3])).toBe(false);
+        });        
+    });
+    
     describe('lz.object should create new instance of the constructor', function () {
         it('creates new Boolean object', function () {
             var obj = lz.object(Boolean, []);

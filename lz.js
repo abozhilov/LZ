@@ -89,6 +89,24 @@ var lz = {};
     lz.isPrimitive = function (val) {
         return typeof val in PRIMITIVE || !val;     
     };
+    
+    /**
+     * Tests whether the lval and rval are equal. 
+     * Performs strict equality test and handle -0 and NaN. 
+     *
+     * @credits http://wiki.ecmascript.org/doku.php?id=harmony:egal
+     * @memberOf lz
+     * @category Object
+     * @param {*} lval
+     * @param {*} rval
+     * @return {Boolean}
+     */
+    lz.sameValue = function (lval, rval) {
+        if (lval === rval) {
+          return lval !== 0 || (1 / lval) === (1 / rval);
+        }
+        return lval !== lval && rval !== rval;
+    };
        
     if (Function.prototype.bind) {
         /**
@@ -924,10 +942,24 @@ var lz = {};
      * @memberOf lz    
      * @category Array/Collection     
      * @param {Array|ArrayLike|string} obj
+     * @param {Number} [pos] 
      * @param {*} value  
      */     
-    lz.contains = function (obj, value) {    
-        return lz.indexOf(obj, value) > -1;
+    lz.contains = function (obj, value, pos) {
+        if (lz.classOf(obj) == 'String') {    
+            return obj.indexOf(value, pos) > -1;
+        }
+        var len = obj.length,
+            i = pos | 0;
+        if (i < 0) {
+            i = Math.max(0, len + i);
+        } 
+        for (;i < len; i++) {
+            if (i in obj && lz.sameValue(obj[i], value)) {
+                return true;
+            }
+        }
+        return false;               
     };
     
     /**
