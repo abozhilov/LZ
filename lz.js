@@ -1,20 +1,12 @@
 /**
- * LZ Lib v.0.6.3 
+ * LZ Lib v.0.6.4 
  * @module
  */
 var lz = {};
 (function () {
     var global = this,  
         hasOwnP = {}.hasOwnProperty;
-    
-    var PROTO_SUPPORT = '__lz__' in {__proto__ : {'__lz__' : 1}},
-        PRIMITIVE = {
-            string : 1,
-            number : 1,
-            boolean : 1,
-            undefined : 1
-        };
-        
+           
     /**
      * Retrieves the type tag of object. 
      * Useful for nominal type checking. 
@@ -87,7 +79,7 @@ var lz = {};
      * @return {boolean} 
      */      
     lz.isPrimitive = function (val) {
-        return typeof val in PRIMITIVE || !val;     
+        return !lz.isObject(val);     
     };
     
     /**
@@ -229,16 +221,22 @@ var lz = {};
      * Not really reliable in older non __proto__ environments. 
      * @private
      */
-    var getProto = function (obj) {
-        if (Object.getPrototypeOf) {
-            return Object.getPrototypeOf(obj);
+    var getProto;
+    if (Object.getPrototypeOf) {
+        getProto = function (obj){
+            return Object.getPrototypeOf(obj)
         }
-        else if (PROTO_SUPPORT) {
+    }
+    else if ('__lz__' in {__proto__ : {'__lz__' : 1}}) {
+        getProto = function (obj){
             return obj.__proto__;
         }
-        return obj.constructor.prototype; 
-    };    
-    
+    }
+    else {
+        getProto = function (obj){
+            return obj.constructor.prototype;
+        }    
+    }
     /**
      * Returns shallow copy of object. 
      * If obj is not an object throw TypeError.
