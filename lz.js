@@ -1218,3 +1218,7 @@ var lz = {};
         return zc;    
     };                             
 }).call(this);
+
+if (typeof module != 'undefined' && module) {
+    module.exports = lz;
+} 
