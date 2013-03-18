@@ -1,5 +1,5 @@
 /**
- * LZ Lib v.0.6.4 
+ * LZ Lib v.0.7.0 
  * @module
  */
 var lz = {};
@@ -1216,7 +1216,39 @@ var lz = {};
         if (!(num & 0x00000001)) {zc += 1;  num >>=  1;}
 
         return zc;    
-    };                             
+    }; 
+    
+    /**
+     * Find the greatest common divisor,
+     * using Euclid's algorithm.
+     * 
+     * @memberOf lz
+     * @category Number
+     * @param {int} a
+     * @param {int} b
+     * @return {int} 
+     */     
+    lz.gcd = function (a, b) {
+        var mod;
+        while ((mod = a % b)) {
+            a = b;
+            b = mod;
+        }
+        return b;
+    };
+    
+    /**
+     * Find the least common multiple of a and b. 
+     * 
+     * @memberOf lz
+     * @category Number
+     * @param {int} a
+     * @param {int} b
+     * @return {int} 
+     */     
+    lz.lcm = function (a, b) {
+        return (a * b) / lz.gcd(a, b);
+    };
 }).call(this);
 
 if (typeof module != 'undefined' && module) {
