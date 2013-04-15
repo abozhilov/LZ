@@ -1249,6 +1249,19 @@ var lz = {};
     lz.lcm = function (a, b) {
         return (a * b) / lz.gcd(a, b);
     };
+    
+    /**
+     * Calculate the factorial of n
+     * 
+     * @memberOf lz
+     * @param {int} n
+     * @return {int}
+     */
+    lz.fact = function (n) {
+        if (n == 0) 
+            return 1;
+        return lz.fact(n - 1) * n;
+    };
 }).call(this);
 
 if (typeof module != 'undefined' && module) {
