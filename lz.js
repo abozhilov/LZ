@@ -915,6 +915,31 @@ var lz = {};
     }
     
     /**
+     * Merge two sorted arrays. 
+     * Return sorted array. 
+     * 
+     * @memberOf lz
+     * @category Array/Collection 
+     * @param {Array} a
+     * @param {Array} b 
+     * @return {Array}
+     */
+    lz.merge = function (a, b) {
+        var arr = [],
+            aLen = a.length, 
+            bLen = b.length,
+            i = 0, j = 0;
+            
+        while(i < aLen && j < bLen) {
+            arr.push(a[i] <= b[j] ? a[i++] : b[j++]);
+        }
+        while (i < aLen) arr.push(a[i++]);
+        while (j < bLen) arr.push(b[j++]);
+        
+        return arr;
+    };
+    
+    /**
      * Searches the value in given obj and pos from right-to-left.
      * If it cannot be found, returns -1
      * otherwise the position of occurrence.
