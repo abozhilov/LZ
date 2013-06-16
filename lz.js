@@ -990,11 +990,11 @@ var lz = {};
      * 
      * @memberOf lz     
      * @category Array/Collection    
-     * @param {Array|string} obj
+     * @param {Array|string|object} obj
      * @param {int} times  
      */     
     lz.repeat = function (obj, times) {
-        var res =  (lz.classOf(obj) == 'String' ? '' : []);
+        var res = obj.constructor();
         for (var mul = Math.max(0, times); mul; mul >>= 1) {
             if (mul & 0x1) res = res.concat(obj);
             obj = obj.concat(obj);
