@@ -1,12 +1,14 @@
 /**
- * LZ Lib v.0.7.0 
+ * LZ Lib v.0.7.1
  * @module
  */
-var lz = {};
 (function () {
-    var global = this,  
-        hasOwnP = {}.hasOwnProperty;
-           
+    'use strict';
+
+    var global = this,
+        hasOwnP = {}.hasOwnProperty,
+        lz = {};
+
     /**
      * Retrieves the type tag of object. 
      * Useful for nominal type checking. 
@@ -15,11 +17,11 @@ var lz = {};
      * @category Object   
      * @param {Object} obj 
      * @return {string}
-     */    
+     */
     lz.classOf = function (obj) {
         return {}.toString.call(obj).slice(8, -1);
     };
-    
+
     /**
      * Retrieves the type of the value. 
      * Extending built-in typeof operator. 
@@ -29,7 +31,7 @@ var lz = {};
      * | Type of val    |  Result string |
      * -----------------------------------
      * | Undefined      | undefined      |
-     * | Null           | null           |      
+     * | Null           | null           |
      * | Number         | number         |
      * | String         | string         |
      * | Boolean        | boolean        |
@@ -57,7 +59,7 @@ var lz = {};
         }
         return type;
     };
-    
+
     /**
      * Tests whether the value is object reference. 
      * 
@@ -69,7 +71,7 @@ var lz = {};
     lz.isObject = function (val) {
         return val === Object(val);
     };
-    
+
     /**
      * Tests whether the value is primitive value. 
      * 
@@ -77,11 +79,11 @@ var lz = {};
      * @category Object         
      * @param {*} val
      * @return {boolean} 
-     */      
+     */
     lz.isPrimitive = function (val) {
-        return !lz.isObject(val);     
+        return !lz.isObject(val);
     };
-    
+
     /**
      * Tests whether the lval and rval are equal. 
      * Performs strict equality test and handle -0 and NaN. 
@@ -99,7 +101,7 @@ var lz = {};
         }
         return lval !== lval && rval !== rval;
     };
-       
+
     if (Function.prototype.bind) {
         /**
          * Creates new instance object via passed constructor function. 
@@ -110,7 +112,7 @@ var lz = {};
          * @param {Function} ctor - constructor function
          * @param {Array} args - arguments list
          * @return {Object} 
-         */     
+         */
         lz.object = function (ctor, args) {
             return new (ctor.bind.apply(ctor, [null].concat([].slice.call(args))));
         };
@@ -121,24 +123,24 @@ var lz = {};
             switch (lz.classOf(ctor.prototype)) {
                 case 'String':
                 case 'Number':
-                case 'Boolean': 
+                case 'Boolean':
                     return new ctor(args[0]);
                 case 'Date':
                     if (len) {
                         if (len == 1) {
                             return new Date(args[0]);
-                        }                        
+                        }
                         return new Date(
-                            args[0], 
-                            args[1], 
-                            (len == 2 ? 1 : args[2]), 
-                            args[3] || 0, 
-                            args[4] || 0, 
-                            args[5] || 0, 
+                            args[0],
+                            args[1],
+                            (len == 2 ? 1 : args[2]),
+                            args[3] || 0,
+                            args[4] || 0,
+                            args[5] || 0,
                             args[6] || 0
-                        );            
+                        );
                     }
-                    return new Date;   
+                    return new Date;
                 default:
                    var F = function (){return ctor.apply(this, args)};
                    F.prototype = ctor.prototype;
@@ -146,7 +148,7 @@ var lz = {};
             }            
         };
     }
-    
+
     if (Object.create) {
         /**
          * Creates new object with given object as prototype. 
@@ -167,7 +169,7 @@ var lz = {};
             return new F;
         };
     }        
-      
+
     if (Object.keys) {
         /**
          * Returns array of own enumerable properties of given object. 
@@ -184,7 +186,7 @@ var lz = {};
     else {
         lz.keys = function (obj) {
             var keys = [];
-            
+
             for (var i in obj) {
                 if (hasOwnP.call(obj, i)) {
                     keys.push(i);
@@ -193,7 +195,7 @@ var lz = {};
             return keys;
         };
     }
-    
+
     /**
      * Mixes own enumerable properties of source objects in dest object. 
      * If property already exists, it overwrites. 
@@ -215,7 +217,7 @@ var lz = {};
         }
         return dest;     
     };
-    
+
     /**
      * Get the internal [[Prototype]]
      * Not really reliable in older non __proto__ environments. 
@@ -224,8 +226,8 @@ var lz = {};
     var getProto;
     if (Object.getPrototypeOf) {
         getProto = function (obj){
-            return Object.getPrototypeOf(obj)
-        }
+            return Object.getPrototypeOf(obj);
+        };
     }
     else if ('__lz__' in {__proto__ : {'__lz__' : 1}}) {
         getProto = function (obj){
@@ -235,7 +237,7 @@ var lz = {};
     else {
         getProto = function (obj){
             return obj.constructor.prototype;
-        }    
+        }
     }
     /**
      * Returns shallow copy of object. 
@@ -296,7 +298,7 @@ var lz = {};
                 );                    
         }
     };
-    
+
     /**
      * White list filter factory.
      * Accepts variable length of properties, 
@@ -314,7 +316,7 @@ var lz = {};
             var obj = {},
                 args = arguments,
                 len = args.length;
-            
+
             for (var i = props.length; i--;) {
                 for (var j = 0; j < len; j++) {
                     var prop = props[i];
@@ -326,7 +328,7 @@ var lz = {};
             return obj;
         };
     };
-    
+
     /**
      * Black list filter factory.
      * Accepts variable length of properties, 
@@ -357,7 +359,7 @@ var lz = {};
             return obj;
         };
     };
-    
+
     /**
      * Creates and initialize namespace starting from the global space.
      * If initialize function is provided, it is called 
@@ -384,8 +386,8 @@ var lz = {};
         }
         return module;         
     };      
-        
-    
+
+
     /**
      * Creates constructor function.
      * Regardless of calling with or without `new` keyword
@@ -403,7 +405,7 @@ var lz = {};
         F.prototype = fn.prototype;
         return F;
     };   
-    
+
 
     if (Function.prototype.bind) {
         /**
@@ -432,7 +434,7 @@ var lz = {};
             }
         }    
     }
-    
+
     /**
      * Returns function which executes the passed function 
      * only once and returns its result, regardless of the number of calls.
@@ -454,7 +456,7 @@ var lz = {};
         f.prototype = fn.prototype;
         return f;
     };
-    
+
     /**
      * Creates lazy evaluated range. 
      * Returns function which accepts callback function, 
@@ -478,14 +480,14 @@ var lz = {};
             start = end;
             end = s;
         }
-        
+
         return function (fn) {
             for (var i = start; i < end; i += step) {
                 fn(i);
             }
         };                           
     };
-    
+
     /**
      * Memoize the result of function calls. 
      * Useful in repeatedly invoking of function with same arguments. 
@@ -507,7 +509,7 @@ var lz = {};
             return cache[key] = fn.apply(this, arguments);
         };              
     };
-    
+
     /**
      * Executes the passed function N times. 
      * Pass the current index of call to the function. 
@@ -530,7 +532,7 @@ var lz = {};
         }
         return arr;        
     };    
-    
+
     /**
      * Converts any array like object to true array object.  
      * 
@@ -549,7 +551,7 @@ var lz = {};
         }
         return arr;
     };
-    
+
     if (Array.prototype.every) {
         /**
          * Returns true if every element in obj 
@@ -603,7 +605,7 @@ var lz = {};
             return false;         
         }
     }
-      
+
     if (Array.prototype.forEach) {
         /**
          * Calls a function for each element in obj.
@@ -627,7 +629,7 @@ var lz = {};
             }        
         }
     }
-     
+
     if (Array.prototype.map) {
         /**
          * Creates a new array with the results of calling 
@@ -656,7 +658,7 @@ var lz = {};
             return arr;    
         }
     }
-         
+
     if (Array.prototype.filter) {
         /**
          * Creates a new array with all of the elements of obj
@@ -692,7 +694,7 @@ var lz = {};
             return arr;    
         }
     }
-        
+
     if (Array.prototype.reduce) {
         /**
          * Apply a function simultaneously against two values 
@@ -724,7 +726,7 @@ var lz = {};
                         break;    
                     }
                 } while (i++ < len);
-                
+
                 if (++i > len) {
                     throw new TypeError('reduce of empty array with no initial value');
                 }
@@ -737,7 +739,7 @@ var lz = {};
             return acc;             
         }
     }
-         
+
     if (Array.prototype.reduceRight) {
         /**
          * Apply a function simultaneously against two values 
@@ -780,7 +782,7 @@ var lz = {};
             return acc;                     
         }
     }
-    
+
     /**
      * Creates new array with uniques values in obj.  
      * If callback function is passed, it is used as transformation of the value.
@@ -819,7 +821,7 @@ var lz = {};
         }
         return set; 
     };
-    
+
     /**
      * Returns random permutation of the array. 
      * It does not mutate the obj.
@@ -839,7 +841,7 @@ var lz = {};
         }
         return arr;    
     };    
-    
+
 
     var indexOf;
     if (Array.prototype.indexOf) {
@@ -866,7 +868,7 @@ var lz = {};
             return -1;
         }
     }
-    
+
     /**
      * Searches the value in given obj and pos from left-to-right.
      * If it cannot be found, returns -1
@@ -884,7 +886,7 @@ var lz = {};
         }
         return indexOf(obj, value, pos);        
     };
-        
+
     var lastIndexOf;
     if (Array.prototype.lastIndexOf) {
         /**
@@ -913,7 +915,7 @@ var lz = {};
             return -1;
         }
     }
-    
+
     /**
      * Merge two sorted arrays. 
      * Return sorted array. 
@@ -929,16 +931,16 @@ var lz = {};
             aLen = a.length, 
             bLen = b.length,
             i = 0, j = 0;
-            
+
         while(i < aLen && j < bLen) {
             arr.push(a[i] <= b[j] ? a[i++] : b[j++]);
         }
         while (i < aLen) arr.push(a[i++]);
         while (j < bLen) arr.push(b[j++]);
-        
+
         return arr;
     };
-    
+
     /**
      * Searches the value in given obj and pos from right-to-left.
      * If it cannot be found, returns -1
@@ -958,7 +960,7 @@ var lz = {};
         if (isNaN(pos)) pos = Infinity;
         return lastIndexOf(obj, value, pos);
     };
-    
+
     /**
      * Returns true if the value is found in obj, otherwise false. 
      * 
@@ -984,7 +986,7 @@ var lz = {};
         }
         return false;               
     };
-    
+
     /**
      * Repeats the given object N times. 
      * 
@@ -1001,7 +1003,7 @@ var lz = {};
         }
         return res;         
     };        
-    
+
     if (String.prototype.trim) {
         /**
          * Trim the leading and trailing 
@@ -1021,7 +1023,7 @@ var lz = {};
             return str.replace(/^\s+|\s+$/g, '');
         };
     }
-    
+
     /**
      * Substitutes the place holders `${prop}` in string
      * with the properties value of obj. 
@@ -1037,7 +1039,7 @@ var lz = {};
             pos = 0, 
             argc = 0,
             offset, value, idx;
-        
+
         while((offset = str.indexOf('${', ++offset)) > -1) {
             buffer.push(str.slice(pos, offset));
             pos = str.indexOf('}', offset) + 1;
@@ -1052,7 +1054,7 @@ var lz = {};
         buffer.push(str.slice(pos));
         return buffer.join('');
     };
-    
+
     /**
      * Converts a string separated by 
      * dashes into a camelCase equivalent.
@@ -1071,7 +1073,7 @@ var lz = {};
         }
         return outstr + str.slice(s);
     };
-    
+
     /**
      * Capitalizes the first letter of a string 
      * and downcases all the others.
@@ -1084,7 +1086,7 @@ var lz = {};
     lz.capitalize = function (str) {
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     }; 
-    
+
     /**
      * Converts a camelized string into a series
      * of words separated by an underscore (_).
@@ -1097,7 +1099,7 @@ var lz = {};
     lz.underscore = function (str) {
         return str.replace(/[A-Z]/g, '_$&').toLowerCase();
     };    
-    
+
     /**
      * Replaces every instance of the underscore 
      * character "_" by a dash "-".
@@ -1110,7 +1112,7 @@ var lz = {};
     lz.dasherize = function (str) {
         return str.replace(/_/g, '-');
     };
-    
+
     /**
      * Checks whether the string 
      * starts with the given substring.
@@ -1124,7 +1126,7 @@ var lz = {};
     lz.startsWith = function (str, prefix) {
         return str.lastIndexOf(prefix, 0) == 0;        
     };
-    
+
     /**
      * Checks whether the string 
      * ends with the given substring.
@@ -1138,7 +1140,7 @@ var lz = {};
     lz.endsWith = function (str, suffix) {
         return str.indexOf(suffix, str.length - suffix.length) > -1;
     };
-    
+
     /**
      * Padds the number string from left with 
      * zeros to the given size.
@@ -1154,18 +1156,18 @@ var lz = {};
         var str = String(num),
             sign = str.charAt(0),
             len = str.length;
-            
+
         if (sign == '-' || sign == '+')
             str = str.slice(1);
         else 
             sign = '';
-        
+
         while (len++ < size) {
             str = '0' + str;
         }
         return sign + str;
     };
-    
+
     /**
      * Returns the number of occurrences of 
      * the given substring in string. 
@@ -1180,7 +1182,7 @@ var lz = {};
     lz.count = function(str, substr) {
         return substr.length && str.split(substr).length - 1;
     };  
-    
+
     /**
      * Case insensitive comparison of two strings.
      * 
@@ -1193,7 +1195,7 @@ var lz = {};
     lz.inscmp = function(lstr, rstr) {
         return lstr.toLowerCase() == rstr.toLowerCase();
     };
-    
+
     if (Number.prototype.clz) {
         /**
          * Counts the number of leading zero 
@@ -1221,7 +1223,7 @@ var lz = {};
             return zc;    
         };
     }
-    
+
     /**
      * Counts the number of trailing zero 
      * bits of the given integer.
@@ -1242,7 +1244,7 @@ var lz = {};
 
         return zc;    
     }; 
-    
+
     /**
      * Find the greatest common divisor,
      * using Euclid's algorithm.
@@ -1261,7 +1263,7 @@ var lz = {};
         }
         return b;
     };
-    
+
     /**
      * Find the least common multiple of a and b. 
      * 
@@ -1274,7 +1276,7 @@ var lz = {};
     lz.lcm = function (a, b) {
         return (a * b) / lz.gcd(a, b);
     };
-    
+
     /**
      * Calculate the factorial of n
      * 
@@ -1287,8 +1289,18 @@ var lz = {};
             return 1;
         return lz.fact(n - 1) * n;
     };
+
+    if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+        define(function() {
+            return lz;
+        });
+    }
+    else if (typeof module !== 'undefined' && module.exports){
+        module.exports = lz;
+    }
+    else {
+        global.lz = lz;
+    }
+
 }).call(this);
 
-if (typeof module != 'undefined' && module) {
-    module.exports = lz;
-} 

@@ -1,0 +1,28 @@
+{
+  "name": "LZ",
+  "version": "0.7.0",
+  "description": "LZ is a chocolate JavaScript library with 40 utility methods",
+  "main": "lz.js",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:abozhilov/LZ.git"
+  },
+  "keywords": [
+    "LZ",
+    "utils"
+  ],
+  "author": "Asen Bozhilov",
+  "license": "LGPL",
+  "readmeFilename": "README.md",
+  "gitHead": "264341733c2d50bb157612df5f75782a1cf02da6",
+  "bugs": {
+    "url": "https://github.com/abozhilov/LZ/issues"
+  }
+}
