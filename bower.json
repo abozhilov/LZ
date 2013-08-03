@@ -1,0 +1,12 @@
+{
+  "name": "LZ",
+  "version": "0.7.1",
+  "main": ["lz.js"],
+  "ignore": [
+    "**/.*",
+    "LICENSE",
+    "README.md",
+    "bower.json",
+    "package.json"
+  ]
+}
